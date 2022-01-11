@@ -72,11 +72,9 @@ class Rational:
 
     def __radd__(self, other:int):
         if isinstance(other, int):
-            print(self.numerator * other + other * self.denominator)
-            print(self.denominator * other)
-            return Rational(int(self.numerator * other.denominator + other.numerator * self.denominator),
-                            int(self.denominator * other.denominator))
-        return self
+               return Rational(int(self.numerator + other * self.denominator),
+                            int(self.denominator))
+        return NotImplemented
 
     def __sub__(self, other):
         if other > self:
@@ -86,22 +84,54 @@ class Rational:
                             int(self.denominator * other.denominator))
         return NotImplemented
 
+    def __isub__(self, other):
+        if other > self:
+            raise ValueError('Result is negative')
+        if isinstance(other, Rational):
+            self.numerator = int(self.numerator * other.denominator-other.numerator * self.denominator)
+            self.denominator = int(self.denominator * other.denominator)
+        return self
+
+    def __rsub__(self, other):
+        if other < self.flo():
+            raise ValueError('Result is negative')
+        if isinstance(other, int):
+            return Rational(int(other * self.denominator - self.numerator),
+                            int(self.denominator))
+        return NotImplemented
+
     def __mul__(self, other):
         if isinstance(other, Rational):
             return Rational(int(self.numerator * other.numerator),
                             int(self.denominator * other.denominator))
         return NotImplemented
 
+    def __imul__(self, other):
+        if isinstance(other, Rational):
+            print(self.numerator * other.numerator)
+            print(self.denominator * other.denominator)
+            self.numerator = int(self.numerator * other.numerator)
+            self.denominator = int(self.denominator * other.denominator)
+        return self
+
+    def __rmul__(self, other:int):
+        if isinstance(other, int):
+            return Rational(int(self.numerator * other),
+                            int(self.denominator))
+        return NotImplemented
+
 
 if __name__ == '__main__':
     try:
-        rat1 = Rational(12, 2)
+        rat1 = Rational(3, 2)
         rat2 = Rational(1, 2)
         a = rat2 <= rat1
         print(a)
-        rat3 = rat1 + rat2
-        rat1 = 3 + rat1
-        print(rat1, rat3)
+        rat1 -= rat2
+        rat1 = 3 * rat1
+        print(rat1, rat2)
+        rat3 = 4 + rat1
+        print(rat3)
 
     except Exception as error:
         print('Error : ', error)
