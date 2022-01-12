@@ -12,8 +12,8 @@ class Rational:
     """
 
     def __init__(self, numerator, denominator):
-        if numerator < 0 or denominator < 0:
-            raise ValueError('Numerator and denominator must be >0 ')
+        if not isinstance(numerator, int)  or not isinstance(denominator, int):
+            raise ValueError
         if denominator == 0:
             raise ValueError('Denominator = 0')
         k = math.gcd(numerator, denominator)
@@ -73,28 +73,25 @@ class Rational:
     def __radd__(self, other:int):
         if isinstance(other, int):
                return Rational(int(self.numerator + other * self.denominator),
-                            int(self.denominator))
+                               int(self.denominator))
         return NotImplemented
 
     def __sub__(self, other):
-        if other > self:
-            raise ValueError('Result is negative')
+
         if isinstance(other, Rational):
             return Rational(int(self.numerator * other.denominator-other.numerator * self.denominator),
                             int(self.denominator * other.denominator))
         return NotImplemented
 
     def __isub__(self, other):
-        if other > self:
-            raise ValueError('Result is negative')
+
         if isinstance(other, Rational):
             self.numerator = int(self.numerator * other.denominator-other.numerator * self.denominator)
             self.denominator = int(self.denominator * other.denominator)
         return self
 
     def __rsub__(self, other):
-        if other < self.flo():
-            raise ValueError('Result is negative')
+
         if isinstance(other, int):
             return Rational(int(other * self.denominator - self.numerator),
                             int(self.denominator))
@@ -123,7 +120,7 @@ class Rational:
 
 if __name__ == '__main__':
     try:
-        rat1 = Rational(3, 2)
+        rat1 = Rational(-3, 2)
         rat2 = Rational(1, 2)
         a = rat2 <= rat1
         print(a)
