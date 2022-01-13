@@ -35,6 +35,9 @@ class Group:
             if value == item.surname:
                 return 'Search completed: \n' + str(item)
 
+    def __iter__(self):
+        return GroupIterator(self.student)
+
     def __getitem__(self, item):
         if isinstance(item, slice):
             start = item.start or 0
@@ -54,6 +57,22 @@ class Group:
 
     def __len__(self):
         return self.group_size
+
+
+class GroupIterator:
+
+    def __init__(self, iter_obj):
+        self.iter_obj = iter_obj
+        self.i = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.i < len(self.iter_obj):
+            self.i += 1
+            return self.iter_obj[self.i-1]
+        raise StopIteration
 
 
 class UserError(Exception):
