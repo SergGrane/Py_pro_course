@@ -28,32 +28,32 @@ class Rational:
 
     def __eq__(self, other):
         if isinstance(other, Rational):
-            return self.flo() == other.flo()
+            return self.numerator * other.denominator == other.numerator * self.denominator
         return NotImplemented
 
     def __ne__(self, other):
         if isinstance(other, Rational):
-            return self.flo() != other.flo()
+            return self.numerator*other.denominator != other.numerator*self.denominator
         return NotImplemented
 
     def __gt__(self, other):
         if isinstance(other, Rational):
-            return self.flo() > other.flo()
+            return self.numerator*other.denominator > other.numerator*self.denominator
         return NotImplemented
 
     def __lt__(self, other):
         if isinstance(other, Rational):
-            return self.flo() < other.flo()
+            return self.numerator*other.denominator < other.numerator*self.denominator
         return NotImplemented
 
     def __ge__(self, other):
         if isinstance(other, Rational):
-            return self.flo() >= other.flo()
+            return self.numerator*other.denominator >= other.numerator*self.denominator
         return NotImplemented
 
     def __le__(self, other):
         if isinstance(other, Rational):
-            return self.flo() <= other.flo()
+            return self.numerator*other.denominator <= other.numerator*self.denominator
         return NotImplemented
 
     def __add__(self, other):
@@ -64,16 +64,14 @@ class Rational:
 
     def __iadd__(self, other):
         if isinstance(other, Rational):
-            print(self.numerator * other.denominator + other.numerator * self.denominator)
-            print(self.denominator * other.denominator)
             self.numerator = int(self.numerator * other.denominator + other.numerator * self.denominator)
             self.denominator = int(self.denominator * other.denominator)
         return self
 
     def __radd__(self, other:int):
         if isinstance(other, int):
-               return Rational(int(self.numerator + other * self.denominator),
-                               int(self.denominator))
+            return Rational(int(self.numerator + other * self.denominator),
+                            int(self.denominator))
         return NotImplemented
 
     def __sub__(self, other):
@@ -105,8 +103,6 @@ class Rational:
 
     def __imul__(self, other):
         if isinstance(other, Rational):
-            print(self.numerator * other.numerator)
-            print(self.denominator * other.denominator)
             self.numerator = int(self.numerator * other.numerator)
             self.denominator = int(self.denominator * other.denominator)
         return self
@@ -120,9 +116,9 @@ class Rational:
 
 if __name__ == '__main__':
     try:
-        rat1 = Rational(-3, 2)
+        rat1 = Rational(4, 2)
         rat2 = Rational(1, 2)
-        a = rat2 <= rat1
+        a = rat2 < rat1
         print(a)
         rat1 -= rat2
         rat1 = 3 * rat1
