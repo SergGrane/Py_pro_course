@@ -86,9 +86,11 @@ class Order:
                 for i in range(start, stop, step):
                     res.append(self.products[i])
                 return '\n'.join(map(str, res))
-        if item < self.num_of_goods:
-            return self.products[item]
-        raise IndexError
+        if isinstance(item, int):
+            if item < self.num_of_goods:
+                return self.products[item]
+            raise IndexError
+        raise TypeError
 
     def __len__(self):
         return self.num_of_goods

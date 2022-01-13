@@ -51,9 +51,11 @@ class Group:
                 for i in range(start, stop, step):
                     res.append(self.student[i])
                 return '\n'.join(map(str, res))
-        if item < self.group_size:
-            return self.student[item]
-        raise IndexError
+        if isinstance(item,int):
+            if item < self.group_size:
+                return self.student[item]
+            raise IndexError
+        raise TypeError
 
     def __len__(self):
         return self.group_size
@@ -86,11 +88,11 @@ class UserError(Exception):
 
 
 if __name__ == '__main__':
-    s1 = Student('aaaaa', 'ssss', '12/12/00', 'rrrrrrr')
+    s1 = Student('aaaaa', 'ssss55', '12/12/00', 'rrrrrrr')
     s2 = Student('aaaaa2', 'ssss2', '12/12/00', 'rrrrrrr')
-    s3 = Student('aaaaa3', 'ssss3', '12/12/00', 'rrrrrrr')
+    s3 = Student('aaaaa3', 'ssss1', '12/12/00', 'rrrrrrr')
     s4 = Student('aaaaa4', 'ssss4', '12/12/00', 'rrrrrrr')
-    gr1=Group('123')
+    gr1 = Group('123')
     gr1.add_student(s1)
     gr1.add_student(s2)
     gr1.add_student(s3)
@@ -98,4 +100,5 @@ if __name__ == '__main__':
     print(gr1)
     for i in gr1:
         print(i)
+    print (gr1[2])
     print('\n', gr1[1:3:])
