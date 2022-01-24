@@ -39,7 +39,9 @@ class Cube:
         """
         if not isinstance(a1, (int, float)) or not isinstance(b1, (int, float)) or not isinstance(c1, (int, float))\
                 or not isinstance(a2, (int, float)) or not isinstance(b2, (int, float)) or not isinstance(c2, (int, float)):
-            raise TypeError
+            raise TypeError('must be int or float')
+        if a1 <= 0 or b1 <= 0 or c1 <= 0 or a2 <= 0 or b2 <= 0 or c2 <= 0:
+            raise ValueError('must be > 0')
         return a1 * b1 * c1 + a2 * b2 * c2
 
 
@@ -47,3 +49,4 @@ if __name__ == "__main__":
     c1 = Cube(2, 3, 4)
     print(c1)
     print(c1.cube_sum(1, 2, 3, 4, 5, 6))
+
